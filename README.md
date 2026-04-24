@@ -1,6 +1,4 @@
-
-
-# DevVault 
+# DevFolio 
 
 A full-stack portfolio and project showcase platform where developers can
 dynamically manage projects through an admin dashboard.
@@ -26,4 +24,3 @@ dynamically manage projects through an admin dashboard.
 - MongoDB
 - JWT Authentication
 
-## 📁 Folder Structure
