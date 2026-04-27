@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../api/axios";
+import "./Home.css";
 
 const Home = () => {
   const [projects, setProjects] = useState([]);
@@ -14,62 +15,83 @@ const Home = () => {
   }, []);
 
   return (
-    <div style={{ fontFamily: "sans-serif", maxWidth: "900px", margin: "0 auto", padding: "2rem" }}>
-      
-      {/* Hero Section */}
-      <section style={{ textAlign: "center", padding: "4rem 0" }}>
-        <h1 style={{ fontSize: "3rem", marginBottom: "1rem" }}>
-          Hi, I'm Shruti 👋
-        </h1>
-        <p style={{ fontSize: "1.2rem", color: "#555", marginBottom: "2rem" }}>
-          Full Stack Developer — I build beautiful, functional web apps
-        </p>
-        <Link to="/projects">
-          <button style={{
-            padding: "0.8rem 2rem",
-            fontSize: "1rem",
-            backgroundColor: "#6c63ff",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer"
-          }}>
-            View My Projects
-          </button>
-        </Link>
+    <div className="home">
+
+      <section className="hero">
+        <div className="hero-content">
+          <p className="hero-greeting">// hello world, I am</p>
+          <h1 className="hero-name">Shruti Sachan</h1>
+          <h2 className="hero-role">
+            Full Stack <span>Developer</span>
+          </h2>
+          <p className="hero-desc">
+            I build modern, scalable web applications with clean code
+            and great user experiences. Passionate about turning ideas into reality.
+          </p>
+          <div className="hero-buttons">
+            <Link to="/projects" className="hero-btn-primary">
+              View My Projects
+            </Link>
+            <a href="https://github.com/shrutisachan08" target="_blank" className="hero-btn-secondary">
+              GitHub Profile
+            </a>
+          </div>
+        </div>
+        <div className="hero-glow" />
       </section>
 
-      {/* Featured Projects */}
-      <section>
-        <h2 style={{ fontSize: "1.8rem", marginBottom: "1.5rem" }}>
-          Featured Projects
-        </h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "1.5rem" }}>
-          {projects.length === 0 ? (
-            <p style={{ color: "#888" }}>No featured projects yet.</p>
-          ) : (
-            projects.map((project) => (
-              <Link to={`/projects/${project._id}`} key={project._id} style={{ textDecoration: "none" }}>
-                <div style={{
-                  border: "1px solid #eee",
-                  borderRadius: "12px",
-                  overflow: "hidden",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-                  transition: "transform 0.2s",
-                }}>
-                  {project.imageUrl && (
-                    <img src={project.imageUrl} alt={project.title}
-                      style={{ width: "100%", height: "160px", objectFit: "cover" }} />
-                  )}
-                  <div style={{ padding: "1rem" }}>
-                    <h3 style={{ marginBottom: "0.5rem", color: "#222" }}>{project.title}</h3>
-                    <p style={{ color: "#666", fontSize: "0.9rem" }}>{project.description}</p>
+      <section className="tech-strip">
+        <p className="tech-strip-label">Tech I work with</p>
+        <div className="tech-strip-tags">
+          {["React", "Node.js", "Express", "MongoDB", "JavaScript", "Python", "Git"].map((tech) => (
+            <span key={tech} className="tech-tag">{tech}</span>
+          ))}
+        </div>
+      </section>
+
+      <section className="featured-section">
+        <div className="section-header">
+          <h2>Featured Projects</h2>
+          <Link to="/projects" className="see-all">See all</Link>
+        </div>
+
+        {projects.length === 0 ? (
+          <div className="empty-featured">
+            <div className="empty-icon">🚀</div>
+            <h3>Projects Coming Soon</h3>
+            <p>Go to your dashboard and mark projects as featured to show them here!</p>
+            <Link to="/projects" className="hero-btn-primary" style={{ display: "inline-block", marginTop: "1rem" }}>
+              Browse All Projects
+            </Link>
+          </div>
+        ) : (
+          <div className="projects-grid">
+            {projects.map((project) => (
+              <Link to={`/projects/${project._id}`} key={project._id} className="project-card">
+                {project.imageUrl && (
+                  <img src={project.imageUrl} alt={project.title} className="card-image" />
+                )}
+                <div className="card-body">
+                  <h3 className="card-title">{project.title}</h3>
+                  <p className="card-desc">{project.description}</p>
+                  <div className="tech-tags">
+                    {project.techStack?.map((tech) => (
+                      <span key={tech} className="tech-tag">{tech}</span>
+                    ))}
                   </div>
                 </div>
               </Link>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="contact-strip">
+        <h2>Let's Work Together</h2>
+        <p>Open to internships, freelance projects and collaborations</p>
+        <a href="mailto:sachan.shruti08@gmail.com" className="hero-btn-primary">
+          Get In Touch
+        </a>
       </section>
 
     </div>
