@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../../api/axios.js";
+import "./ProjectForm.css";
 
 const ProjectForm = () => {
   const { id } = useParams();
@@ -98,150 +99,76 @@ const ProjectForm = () => {
     marginBottom: "0.2rem",
   };
 
-  return (
-    <div style={{ fontFamily: "sans-serif", maxWidth: "700px", margin: "0 auto", padding: "2rem" }}>
-
-      <button
-        onClick={() => navigate("/admin/dashboard")}
-        style={{ background: "none", border: "none", color: "#6c63ff", cursor: "pointer", marginBottom: "1rem" }}
-      >
+ return (
+    <div className="form-page">
+      <button onClick={() => navigate("/admin/dashboard")} className="form-back-btn">
         ← Back to Dashboard
       </button>
 
-      <h1 style={{ fontSize: "1.8rem", marginBottom: "2rem" }}>
-        {isEditing ? "Edit Project" : "Add New Project"}
-      </h1>
+      <h1>{isEditing ? "Edit Project" : "Add New Project"}</h1>
 
-      {error && (
-        <div style={{ background: "#fff0f0", color: "#e00", padding: "0.8rem", borderRadius: "8px", marginBottom: "1rem" }}>
-          {error}
-        </div>
-      )}
+      {error && <div className="error-msg">{error}</div>}
 
       <form onSubmit={handleSubmit}>
-
-        {/* Title */}
-        <div style={{ marginBottom: "1.2rem" }}>
-          <label style={labelStyle}>Title *</label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-            style={inputStyle}
-            placeholder="My Awesome Project"
-          />
+        <div className="form-group">
+          <label>Title *</label>
+          <input type="text" name="title" value={formData.title}
+            onChange={handleChange} required className="form-input"
+            placeholder="My Awesome Project" />
         </div>
 
-        {/* Description */}
-        <div style={{ marginBottom: "1.2rem" }}>
-          <label style={labelStyle}>Short Description *</label>
-          <input
-            type="text"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-            style={inputStyle}
-            placeholder="A brief one-liner about the project"
-          />
+        <div className="form-group">
+          <label>Short Description *</label>
+          <input type="text" name="description" value={formData.description}
+            onChange={handleChange} required className="form-input"
+            placeholder="A brief one-liner about the project" />
         </div>
 
-        {/* Long Description */}
-        <div style={{ marginBottom: "1.2rem" }}>
-          <label style={labelStyle}>Long Description</label>
-          <textarea
-            name="longDescription"
-            value={formData.longDescription}
-            onChange={handleChange}
-            rows={4}
-            style={{ ...inputStyle, resize: "vertical" }}
-            placeholder="Detailed description of the project..."
-          />
+        <div className="form-group">
+          <label>Long Description</label>
+          <textarea name="longDescription" value={formData.longDescription}
+            onChange={handleChange} rows={4}
+            className="form-input form-textarea"
+            placeholder="Detailed description..." />
         </div>
 
-        {/* Tech Stack */}
-        <div style={{ marginBottom: "1.2rem" }}>
-          <label style={labelStyle}>Tech Stack (comma separated)</label>
-          <input
-            type="text"
-            name="techStack"
-            value={formData.techStack}
-            onChange={handleChange}
-            style={inputStyle}
-            placeholder="React, Node.js, MongoDB"
-          />
+        <div className="form-group">
+          <label>Tech Stack (comma separated)</label>
+          <input type="text" name="techStack" value={formData.techStack}
+            onChange={handleChange} className="form-input"
+            placeholder="React, Node.js, MongoDB" />
         </div>
 
-        {/* Live URL */}
-        <div style={{ marginBottom: "1.2rem" }}>
-          <label style={labelStyle}>Live URL</label>
-          <input
-            type="url"
-            name="liveUrl"
-            value={formData.liveUrl}
-            onChange={handleChange}
-            style={inputStyle}
-            placeholder="https://myproject.vercel.app"
-          />
+        <div className="form-group">
+          <label>Live URL</label>
+          <input type="url" name="liveUrl" value={formData.liveUrl}
+            onChange={handleChange} className="form-input"
+            placeholder="https://myproject.vercel.app" />
         </div>
 
-        {/* GitHub URL */}
-        <div style={{ marginBottom: "1.2rem" }}>
-          <label style={labelStyle}>GitHub URL</label>
-          <input
-            type="url"
-            name="githubUrl"
-            value={formData.githubUrl}
-            onChange={handleChange}
-            style={inputStyle}
-            placeholder="https://github.com/shruti/project"
-          />
+        <div className="form-group">
+          <label>GitHub URL</label>
+          <input type="url" name="githubUrl" value={formData.githubUrl}
+            onChange={handleChange} className="form-input"
+            placeholder="https://github.com/shruti/project" />
         </div>
 
-        {/* Image Upload */}
-        <div style={{ marginBottom: "1.2rem" }}>
-          <label style={labelStyle}>Project Image</label>
-          <input
-            type="file"
-            accept="image/*"
+        <div className="form-group">
+          <label>Project Image</label>
+          <input type="file" accept="image/*"
             onChange={(e) => setImage(e.target.files[0])}
-            style={{ ...inputStyle, padding: "0.4rem" }}
-          />
+            className="form-input" />
         </div>
 
-        {/* Featured */}
-        <div style={{ marginBottom: "2rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <input
-            type="checkbox"
-            name="featured"
-            checked={formData.featured}
-            onChange={handleChange}
-            id="featured"
-          />
+        <div className="form-checkbox-group">
+          <input type="checkbox" name="featured" id="featured"
+            checked={formData.featured} onChange={handleChange} />
           <label htmlFor="featured">Mark as Featured (shows on Home page)</label>
         </div>
 
-        {/* Submit */}
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            width: "100%",
-            padding: "0.9rem",
-            backgroundColor: "#6c63ff",
-            color: "white",
-            border: "none",
-            borderRadius: "8px",
-            fontSize: "1rem",
-            cursor: loading ? "not-allowed" : "pointer",
-            opacity: loading ? 0.7 : 1,
-          }}
-        >
+        <button type="submit" disabled={loading} className="btn-submit">
           {loading ? "Saving..." : isEditing ? "Update Project" : "Add Project"}
         </button>
-
       </form>
     </div>
   );
